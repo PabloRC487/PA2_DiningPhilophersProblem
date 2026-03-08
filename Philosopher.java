@@ -23,13 +23,13 @@ public class Philosopher extends BaseThread {
 	{
 		try
 		{
-			System.out.println("I am philosopher " + getTID() + " and I am starting to eat.");
-			Thread.yield();
+			System.out.println("I am philosopher " + getTID() + " and I am starting to eat.\n");
+			randomYield();
 			// ...
 			sleep((long)(Math.random() * TIME_TO_WASTE));
 			// ...
-			Thread.yield();
-			System.out.println("I am philosopher " + getTID() + " and I have finished eating.");
+			randomYield();
+			System.out.println("I am philosopher " + getTID() + " and I have finished eating.\n");
 		}
 		catch(InterruptedException e)
 		{
@@ -52,11 +52,11 @@ public class Philosopher extends BaseThread {
 		// ...
 		try
 		{
-			System.out.println("I am philosopher " + getTID() + " and I am starting to think.");
-			Thread.yield();
+			System.out.println("I am philosopher " + getTID() + " and I am starting to think.\n");
+			randomYield();
 			sleep((long)(Math.random() * TIME_TO_WASTE));
-			Thread.yield();
-			System.out.println("I am philosopher " + getTID() + " and I have finished thinking.");
+			randomYield();
+			System.out.println("I am philosopher " + getTID() + " and I have finished thinking.\n");
 		}
 		catch(InterruptedException e)
 		{
@@ -71,19 +71,20 @@ public class Philosopher extends BaseThread {
 	 * started talking. - yield - Say something brilliant at random - yield - The
 	 * print that they are done talking.
 	 */
-	public void talk() {
-		// ...
 
+	public void talk()	
+	{
+		System.out.println("Philosopher " + getTID() + " starts talking:\n");
+		randomYield();
 		saySomething();
-
-		// ...
+		randomYield();
+		System.out.println("Philosopher " + getTID() + " has stopped talking\n");
 	}
 
 	/**
 	 * No, this is not the act of running, just the overridden Thread.run()
 	 */
-	public void run()
-	{
+	public void run() {
 		for(int i = 0; i < DiningPhilosophers.DINING_STEPS; i++)
 		{
 			DiningPhilosophers.soMonitor.pickUp(getTID());
@@ -99,13 +100,14 @@ public class Philosopher extends BaseThread {
 			 * A decision is made at random whether this particular
 			 * philosopher is about to say something terribly useful.
 			 */
-			if(true == false)
+			if(Math.random() < 0.2)
 			{
-				// Some monitor ops down here...
+				DiningPhilosophers.soMonitor.requestTalk();
 				talk();
-				// ...
+				DiningPhilosophers.soMonitor.endTalk();
 			}
-			yield();
+
+			randomYield();
 		}
 	} // run()
 
