@@ -3,6 +3,26 @@
  *
  * @author Serguei A. Mokhov, mokhov@cs.concordia.ca
  */
+
+/*
+ * Task 4: Dynamic Modification of the Number of Philosophers
+ *
+ * Changing the number of philosophers mid-execution is not possiblefor the following reasons:
+ *
+ * 1. The state[] array is fixed at initialization. Adding or removing a new philosopher
+ *    would require resizing the array and recalculating all neighbor indices,
+ *    which would break the logic of philosophers currently waiting in wait().
+ *
+ * 2. If a philosopher leaves mid-execution it could be possible that he leaves 
+ * 	  while still holding a chopstick, which would break the system if another 
+ * 	  philosopher is waiting for that chopstick.
+ *
+ * To support true dynamic modification, the entire Monitor would need to be
+ * redesigned using dynamic data structures (e.g. ArrayList instead of array)
+ * and additional synchronization to handle structural changes safely.
+ */
+
+
 public class Monitor {
 	/*
 	 * ------------ Data members ------------
