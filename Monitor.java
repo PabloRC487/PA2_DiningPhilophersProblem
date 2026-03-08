@@ -50,6 +50,7 @@ public class Monitor {
 		int i = piTID - 1;
 		state[i] = HUNGRY;
 		test(piTID);
+		//hola
 		while (state[i] != EATING) {
 			try {
 				wait();
