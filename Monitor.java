@@ -35,6 +35,7 @@ public class Monitor {
 	private int[] state;
 	private int numOfPhil;
 	private boolean isTalking = false;
+	private int numOfPeppers = 2;
 
 	/**
 	 * Constructor
@@ -118,6 +119,24 @@ public class Monitor {
 		isTalking = false;
 		notifyAll();
 	}
+	
+	public synchronized void requestPepper() {
+		
+		while(numOfPeppers == 0) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		numOfPeppers--;	
+	}
+	
+	public synchronized void releasePepper() {
+		numOfPeppers++;
+		notifyAll();
+	}
+	
 }
 
 // EOF

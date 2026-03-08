@@ -10,6 +10,7 @@ public class Philosopher extends BaseThread {
 	 * Max time an action can take (in milliseconds)
 	 */
 	public static final long TIME_TO_WASTE = 1000;
+	public final double PROB_WANTING_PEPPER = 1;
 
 	/**
 	 * The act of eating.
@@ -26,7 +27,17 @@ public class Philosopher extends BaseThread {
 			System.out.println("I am philosopher " + getTID() + " and I am starting to eat.\n");
 			randomYield();
 			// ...
+			
+			if(Math.random() < PROB_WANTING_PEPPER) {
+				System.out.println("Philosopher " + getTID() + " wants a pepper shaker.\n");
+				DiningPhilosophers.soMonitor.requestPepper();
+				randomYield();
+				DiningPhilosophers.soMonitor.releasePepper();
+				System.out.println("Philosopher " + getTID() + " has released the pepper shaker\n");
+			}
+			
 			sleep((long)(Math.random() * TIME_TO_WASTE));
+			
 			// ...
 			randomYield();
 			System.out.println("I am philosopher " + getTID() + " and I have finished eating.\n");
@@ -100,7 +111,7 @@ public class Philosopher extends BaseThread {
 			 * A decision is made at random whether this particular
 			 * philosopher is about to say something terribly useful.
 			 */
-			if(Math.random() < 0.2)
+			if(Math.random() < 0.25)
 			{
 				DiningPhilosophers.soMonitor.requestTalk();
 				talk();
@@ -116,10 +127,10 @@ public class Philosopher extends BaseThread {
 	 * your own phrases.
 	 */
 	public void saySomething() {
-		String[] astrPhrases = { "Eh, it's not easy to be a philosopher: eat, think, talk, eat...",
-				"You know, true is false and false is true if you think of it",
-				"2 + 2 = 5 for extremely large values of 2...", "If thee cannot speak, thee must be silent",
-				"My number is " + getTID() + "" };
+		String[] astrPhrases = { "Eh, it's not easy to be a philosopher: eat, think, talk, eat...\n",
+				"You know, true is false and false is true if you think of it\n",
+				"2 + 2 = 5 for extremely large values of 2...\n", "If thee cannot speak, thee must be silent\n",
+				"My number is " + getTID() + "\n" };
 
 		System.out.println(
 				"Philosopher " + getTID() + " says: " + astrPhrases[(int) (Math.random() * astrPhrases.length)]);
