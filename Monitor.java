@@ -14,6 +14,7 @@ public class Monitor {
 
 	private int[] state;
 	private int numOfPhil;
+	private boolean isTalking = false;
 
 	/**
 	 * Constructor
@@ -79,7 +80,14 @@ public class Monitor {
 	 * eating).
 	 */
 	public synchronized void requestTalk() {
-		// ...
+		while (isTalking) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		isTalking = true;
 	}
 
 	/**
@@ -87,7 +95,8 @@ public class Monitor {
 	 * talking.
 	 */
 	public synchronized void endTalk() {
-		// ...
+		isTalking = false;
+		notifyAll();
 	}
 }
 

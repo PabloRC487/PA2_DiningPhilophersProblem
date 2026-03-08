@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <dirs>
     <entry loc="C:\Users\julia\.p2\pool\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.9.v20251105-0741\jre" stamp="1769642055364"/>
+    <entry loc="C:\Program Files\Java\jdk-20" stamp="1693769291101"/>
     <entry loc="C:\Users\julia\AppData\Local\Programs\Eclipse Adoptium\jdk-25.0.1.8-hotspot" stamp="1769642314819"/>
     <entry loc="C:\Users\julia\.p2\pool\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.9.v20251105-0741" stamp="1769642055393"/>
 </dirs>
