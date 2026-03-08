@@ -16,12 +16,14 @@ public class DiningPhilosophers {
 	/**
 	 * This default may be overridden from the command line
 	 */
-	public static final int DEFAULT_NUMBER_OF_PHILOSOPHERS = 5;
+	// public static final int DEFAULT_NUMBER_OF_PHILOSOPHERS = 5;
 
 	/**
 	 * Dining "iterations" per philosopher thread while they are socializing there
 	 */
-	public static final int DINING_STEPS = 10;
+	
+	// public static final int DINING_STEPS = 10;
+	public static final int DINING_STEPS = 2;
 
 	/**
 	 * Our shared monitor for the philosphers to consult
@@ -42,16 +44,17 @@ public class DiningPhilosophers {
 			 * supplied.
 			 */
 
+			// User input number of philosophers
 			Scanner s = new Scanner(System.in);
 			int iPhilosophers = 0;
 			// int iPhilosophers = DEFAULT_NUMBER_OF_PHILOSOPHERS;
 
-			while (iPhilosophers < 3) {
+			while (iPhilosophers < 3) { //The minimum number of phil is 3
 				System.out.println("Enter the number of philosophers you want (>=3): ");
-				if (s.hasNextInt()) {
+				if (s.hasNextInt()) { 
+					// For invalid integer
 					iPhilosophers = s.nextInt();
 					if (iPhilosophers < 3) {
-						// For invalid integer
 						System.out.println("\"" + iPhilosophers
 								+ "\" is not an acceptable number. Please enter a positive number (bigger than or equal 3)");
 					}
@@ -60,7 +63,6 @@ public class DiningPhilosophers {
 					String invalid = s.next();
 					System.out.println("\"" + invalid
 							+ "\" is not an acceptable number. Please enter a positive number (bigger than or equal 3)");
-					//s.next();
 				}
 			}
 			s.close();

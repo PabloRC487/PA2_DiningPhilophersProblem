@@ -12,27 +12,20 @@ public class Philosopher extends BaseThread {
 	public static final long TIME_TO_WASTE = 1000;
 
 	/**
-	 * The act of eating.
-	 * - Print the fact that a given phil (their TID) has started eating.
-	 * - yield
-	 * - Then sleep() for a random interval.
-	 * - yield
-	 * - The print that they are done eating.
+	 * The act of eating. - Print the fact that a given phil (their TID) has started
+	 * eating. - yield - Then sleep() for a random interval. - yield - The print
+	 * that they are done eating.
 	 */
-	public void eat()
-	{
-		try
-		{
+	public void eat() {
+		try {
 			System.out.println("I am philosopher " + getTID() + " and I am starting to eat.\n");
 			randomYield();
 			// ...
-			sleep((long)(Math.random() * TIME_TO_WASTE));
+			sleep((long) (Math.random() * TIME_TO_WASTE));
 			// ...
 			randomYield();
 			System.out.println("I am philosopher " + getTID() + " and I have finished eating.\n");
-		}
-		catch(InterruptedException e)
-		{
+		} catch (InterruptedException e) {
 			System.err.println("Philosopher.eat():");
 			DiningPhilosophers.reportException(e);
 			System.exit(1);
@@ -40,26 +33,19 @@ public class Philosopher extends BaseThread {
 	}
 
 	/**
-	 * The act of thinking.
-	 * - Print the fact that a given phil (their TID) has started thinking.
-	 * - yield
-	 * - Then sleep() for a random interval.
-	 * - yield
-	 * - The print that they are done thinking.
+	 * The act of thinking. - Print the fact that a given phil (their TID) has
+	 * started thinking. - yield - Then sleep() for a random interval. - yield - The
+	 * print that they are done thinking.
 	 */
-	public void think()
-	{
+	public void think() {
 		// ...
-		try
-		{
+		try {
 			System.out.println("I am philosopher " + getTID() + " and I am starting to think.\n");
-			randomYield();
-			sleep((long)(Math.random() * TIME_TO_WASTE));
+			randomYield(); // The yield is done to allow other threads to run
+			sleep((long) (Math.random() * TIME_TO_WASTE)); // Simulate eating time
 			randomYield();
 			System.out.println("I am philosopher " + getTID() + " and I have finished thinking.\n");
-		}
-		catch(InterruptedException e)
-		{
+		} catch (InterruptedException e) {
 			System.err.println("Philosopher.think():");
 			DiningPhilosophers.reportException(e);
 			System.exit(1);
@@ -72,8 +58,7 @@ public class Philosopher extends BaseThread {
 	 * print that they are done talking.
 	 */
 
-	public void talk()	
-	{
+	public void talk() {
 		System.out.println("Philosopher " + getTID() + " starts talking:\n");
 		randomYield();
 		saySomething();
@@ -85,8 +70,7 @@ public class Philosopher extends BaseThread {
 	 * No, this is not the act of running, just the overridden Thread.run()
 	 */
 	public void run() {
-		for(int i = 0; i < DiningPhilosophers.DINING_STEPS; i++)
-		{
+		for (int i = 0; i < DiningPhilosophers.DINING_STEPS; i++) {
 			DiningPhilosophers.soMonitor.pickUp(getTID());
 
 			eat();
@@ -96,12 +80,10 @@ public class Philosopher extends BaseThread {
 			think();
 
 			/*
-			 * TODO:
-			 * A decision is made at random whether this particular
-			 * philosopher is about to say something terribly useful.
+			 * TODO: A decision is made at random whether this particular philosopher is
+			 * about to say something terribly useful.
 			 */
-			if(Math.random() < 0.2)
-			{
+			if (Math.random() < 0.2) {
 				DiningPhilosophers.soMonitor.requestTalk();
 				talk();
 				DiningPhilosophers.soMonitor.endTalk();

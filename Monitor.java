@@ -29,11 +29,12 @@ public class Monitor {
 	 * ------------ Data members ------------
 	 */
 
+	// Different states of the philosophers
 	private static final int THINKING = 0;
 	private static final int HUNGRY = 1;
 	private static final int EATING = 2;
 
-	private int[] state;
+	private int[] state; // Array with each philosophers' state
 	private int numOfPhil;
 	private boolean isTalking = false;
 
@@ -47,7 +48,7 @@ public class Monitor {
 		numOfPhil = piNumberOfPhilosophers;
 		state = new int[numOfPhil];
 		for (int i = 0; i < numOfPhil; i++) {
-			state[i] = THINKING;
+			state[i] = THINKING; // At the beginning initialize all philosophers state to THINKING
 		}
 	}
 
@@ -55,18 +56,20 @@ public class Monitor {
 	 * ------------------------------- User-defined monitor procedures You may need
 	 * to add more procedures for task 5 -------------------------------
 	 */
+
+	// Method done to test if a philosopher can eat by checking if the left and
+	// right philosophers are not eating (their chopsticks are free) and if the
+	// philosopher wants to eat
+	// For task 5 added the pepper shakers condition
 	private void test(int piTID) {
-		int i = piTID - 1;
+		int i = piTID - 1; // piTID starts from 1
 		int left = (i - 1 + numOfPhil) % numOfPhil;
 		int right = (i + 1) % numOfPhil;
-		if (state[left] != EATING && state[right] != EATING && state[i] == HUNGRY && pepperShakers >= 0) {
+		if (state[left] != EATING && state[right] != EATING && state[i] == HUNGRY && pepperShakers > 0) {
 			state[i] = EATING;
-			pepperShakers--;
+			pepperShakers--; // Take a pepper shaker
 			System.out.println("Philosopher " + piTID + " has taken a pepper shaker. Remaining: " + pepperShakers);
-			notifyAll();
-		}
-		else if (state[i] == HUNGRY && pepperShakers == 0) {
-		    System.out.println("Philosopher " + piTID + " is waiting for a pepper shaker, there are none left.");
+			// notifyAll();
 		}
 	}
 
@@ -78,8 +81,8 @@ public class Monitor {
 		// ...
 		int i = piTID - 1;
 		state[i] = HUNGRY;
-		test(piTID);
-		while (state[i] != EATING) {
+		test(piTID); // Check if they can eat
+		while (state[i] != EATING) { // If they cannot, wait
 			try {
 				wait();
 			} catch (InterruptedException e) {
@@ -95,14 +98,19 @@ public class Monitor {
 	public synchronized void putDown(final int piTID) {
 		// ...
 		int i = piTID - 1;
-		state[i] = THINKING;
-		pepperShakers++;
+		state[i] = THINKING; // Once a philosopher has finished eating, go back to thinking
+		if (pepperShakers < 2) {
+			pepperShakers++; // Return the pepper shaker to the table
+		}
 		System.out.println("Philosopher " + piTID + " has put back a pepper shaker. Available: " + pepperShakers);
+
+		// Test both neighbors so they can eat if chopsticks are now free
 		int left = (i - 1 + numOfPhil) % numOfPhil;
 		int right = (i + 1) % numOfPhil;
+
 		test(left + 1);
 		test(right + 1);
-		notifyAll();
+		notifyAll(); // Wake up all waiting philosophers
 	}
 
 	/**
