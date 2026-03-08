@@ -58,20 +58,19 @@ public class Philosopher extends BaseThread
 	 * - yield
 	 * - The print that they are done talking.
 	 */
-	public void talk()
+	public void talk()	
 	{
-		// ...
-
+		System.out.println("Philosopher " + getTID() + " starts talking:\n");
+		randomYield();
 		saySomething();
-
-		// ...
+		randomYield();
+		System.out.println("Philosopher " + getTID() + " has stopped talking\n");
 	}
 
 	/**
 	 * No, this is not the act of running, just the overridden Thread.run()
 	 */
-	public void run()
-	{
+	public void run() {
 		for(int i = 0; i < DiningPhilosophers.DINING_STEPS; i++)
 		{
 			DiningPhilosophers.soMonitor.pickUp(getTID());
@@ -87,14 +86,14 @@ public class Philosopher extends BaseThread
 			 * A decision is made at random whether this particular
 			 * philosopher is about to say something terribly useful.
 			 */
-			if(true == false)
+			if(Math.random() < 0.2)
 			{
-				// Some monitor ops down here...
+				DiningPhilosophers.soMonitor.requestTalk();
 				talk();
-				// ...
+				DiningPhilosophers.soMonitor.endTalk();
 			}
 
-			yield();
+			randomYield();
 		}
 	} // run()
 
